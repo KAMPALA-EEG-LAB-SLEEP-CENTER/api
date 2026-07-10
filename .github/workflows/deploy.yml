@@ -15,8 +15,10 @@ jobs:
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
+            set -e
             cd /var/www/kampala-eeg/api
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             npm install
             NODE_OPTIONS="--max-old-space-size=512" npm run build
             npx prisma generate
